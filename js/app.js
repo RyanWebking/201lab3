@@ -1,14 +1,17 @@
 'use strict';
 
 
+
 //used this to get the user's name. rwebking
 var black = prompt('Hey, What is your name?');
 console.log('user\'s name is ' + black + '.');
 
 
 //asked the user if he wanted to play a game. rwebking
-var game = confirm(black + ', Do you wanna play a game? (in creepy Jig Saw voice.)');
-console.log('user answered ' + game + ' on wanting to play a game.');
+var game = prompt(black + ', Do you wanna play a game? (in creepy Jig Saw voice.)');
+game.toLocaleLowerCase;
+
+console.log('user confirmed ' + game + 'to wanting to play a game.');
 
 if (game === 'yes') {
   alert('Great');
@@ -16,19 +19,22 @@ if (game === 'yes') {
   alert('Too Bad!');
 }
 
+
 function ryan() {
 
-  var myQuestions = [
+  var counter = 0;
+
+  var questions = [
     'Do I have a dog?',
     'I am getting a tattoo sleeve soon, Can you guess the theme?',
     'Do I work for an airline?',
     'Do you want free flights?',
     'Do I like Hawaii or Mexico?',
     'How many countries have I visited?',
-    'Who is one of my favorite characters in \'Friends\'?'
+    'Who is one of my favorite characters in Friends?'
   ];
 
-  var myPossibleAnswers = [
+  var mypossibleAnswers = [
     ['yes', 'YES', 'y', 'Y', 'Yes', 'no', 'NO', 'No', 'N', 'n'],
     ['Harry Potter', 'HARRY POTTER', 'harry potter'],
     ['yes', 'YES', 'y', 'Y', 'Yes', 'no', 'NO', 'No', 'N', 'n'],
@@ -38,7 +44,7 @@ function ryan() {
     ['Ross', 'ross', 'Phoebe', 'phoebe', 'Rachel', 'rachel', 'Chandler', 'chandler', 'Mrs. Chanandler Bong', 'Joey', 'joey', 'Monica', 'monica']
   ];
 
-  var myCorrectAnswers = [
+  var mycorrectAnswers = [
     ['yes', 'YES', 'Yes'],
     ['Harry Potter', 'HARRY POTTER', 'harry potter'],
     ['yes', 'YES', 'y', 'Y', 'Yes'],
@@ -48,13 +54,49 @@ function ryan() {
     ['Ross', 'ross', 'Rachel', 'rachel', 'Joey', 'joey']
   ];
 
-  var tries = [1, 1, 1, 1, 4, 6];
+  var tries = [1, 1, 1, 1, 1, 4, 6];
 
   var responses = [];
 
+
+  for (var turnIndex = 0; turnIndex < questions.length; turnIndex++) {
+    for (var tryIndex = 0; tryIndex < tries[turnIndex]; tryIndex++) {
+      var response = '';
+      while (!mypossibleAnswers[turnIndex].includes(response)) {
+        response = prompt(questions[turnIndex]);
+      }
+      responses.push(response);
+      console.log(response);
+
+      // Check to see if the response is correct
+      if (mycorrectAnswers[turnIndex].includes(response)) {
+        alert('Correct!');
+        counter++;
+        break;
+        // If they're on "how many countries?":
+      } else if (turnIndex === 5) {
+        if (response > 5) {
+          alert('Too High.');
+        } else if (response < 5) {
+          alert('Too Low.');
+        }
+
+        // If they're on their last try:
+      } else if (tryIndex === tries[turnIndex] - 1) {
+        alert('Incorrect.');
+        // If they have more tries left:
+      } else {
+        alert('Incorrect. You have ' + (tries[turnIndex] - tryIndex - 1) + ' left.');
+      }
+    }
+  }
+
+  alert(black + ', you got ' + counter + ' out of ' +
+    questions.length + ' correct.');
 }
 
 ryan();
+
 
 
 
@@ -134,4 +176,3 @@ ryan();
 // } else {
 //   alert('Try numbers between 1 and 10.');
 // }
-
